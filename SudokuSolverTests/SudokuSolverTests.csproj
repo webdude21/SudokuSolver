@@ -53,6 +53,12 @@
     <Compile Include="SudokuClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SudokuSolver\SudokuSolver.csproj">
+      <Project>{0DC0F6EE-D2E7-4C12-8C78-532154CC9311}</Project>
+      <Name>SudokuSolver</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
