@@ -12,10 +12,9 @@
             var sudokuBoard = new SudokuBoard();
             var sudokuReader = new StringBoardReaderStrategy(StringInputPuzzle);
             sudokuReader.FillBoard(sudokuBoard);
+            Console.WriteLine($"Input:{Environment.NewLine}{sudokuBoard}");
             var sudokuSolver = new BruteForceSudokuSolver(sudokuBoard);
-
-            var resultBoard = sudokuSolver.Solve();
-            Console.WriteLine(resultBoard);
+            Console.WriteLine($"Output:{Environment.NewLine}{sudokuSolver.Solve()}");
         }
     }
 }

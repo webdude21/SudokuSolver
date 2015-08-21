@@ -78,11 +78,6 @@
             return true;
         }
 
-        public object Clone()
-        {
-            return this.board.Clone();
-        }
-
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();

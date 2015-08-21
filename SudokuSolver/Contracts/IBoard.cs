@@ -1,8 +1,6 @@
 ﻿namespace SudokuSolver.Contracts
 {
-    using System;
-
-    public interface IBoard : ICloneable
+    public interface IBoard
     {
         byte Length { get; }
 

@@ -32,18 +32,20 @@
 
             foreach (var digit in this.input)
             {
-                board[row, col] = (byte)(digit - '0');
-
-                if (col >= this.Length)
+                if (col >= board.Length)
                 {
                     col = 0;
                     row += 1;
                 }
 
-                if (row >= this.Length)
+                if (row >= board.Length)
                 {
                     break;
                 }
+
+                board[row, col] = (byte)(digit - '0');
+
+                col++;
             }
         }
     }

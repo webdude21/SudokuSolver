@@ -20,7 +20,7 @@
                 throw new OperationCanceledException("The puzzle cannot be solved");
             }
 
-            return this.inputBoard.Clone() as IBoard;
+            return this.inputBoard;
         }
 
         private bool Solved(Cell cell)
