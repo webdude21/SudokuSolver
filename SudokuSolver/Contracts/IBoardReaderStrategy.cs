@@ -1,9 +1,9 @@
 ﻿namespace SudokuSolver.Contracts
 {
-    using System.Collections.Generic;
-
-    public interface IBoardReaderStrategy : IEnumerable<byte>
+    public interface IBoardReaderStrategy
     {
         int Length { get; }
+
+        void FillBoard (IBoard board);
     }
 }
