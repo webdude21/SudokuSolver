@@ -2,7 +2,7 @@
 {
     public interface IBoard
     {
-        byte BoardSize { get; }
+        byte Length { get; }
 
         byte this[int row, int col] { get; set; }
     }

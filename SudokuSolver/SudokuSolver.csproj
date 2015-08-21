@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IBoard.cs" />
+    <Compile Include="Contracts\IBoardReaderStrategy.cs" />
+    <Compile Include="StringBoardReaderStrategy.cs" />
     <Compile Include="SudokuBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

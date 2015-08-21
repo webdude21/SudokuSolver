@@ -6,23 +6,61 @@
 
     public class SudokuBoard : IBoard, IEquatable<SudokuBoard>
     {
+        private readonly IBoardReaderStrategy boardReader;
+
         private byte[][] board;
 
-        public SudokuBoard(byte boardSize = 9)
+        private const byte BoardSize = 9;
+
+        public SudokuBoard(IBoardReaderStrategy boardReader)
         {
-            this.BoardSize = boardSize;
+            this.boardReader = boardReader;
             this.InitializeBoard();
+            this.FillBoard();
         }
 
-        public byte BoardSize { get; }
+        public byte Length => BoardSize;
 
         private void InitializeBoard()
         {
-            this.board = new byte[this.BoardSize][];
+            this.board = new byte[BoardSize][];
 
-            for (var i = 0; i < this.BoardSize; i++)
+            for (var i = 0; i < BoardSize; i++)
             {
-                this.board[i] = new byte[this.BoardSize];
+                this.board[i] = new byte[BoardSize];
+            }
+        }
+
+        private void FillBoard()
+        {
+            this.CheckIfBoardReaderHasEnoughDigits();
+            var row = 0;
+            var col = 0;
+
+            foreach (var digit in this.boardReader)
+            {
+                this[row, col] = digit;
+
+                if (col >= this.Length)
+                {
+                    col = 0;
+                    row += 1;
+                }
+
+                if (row >= this.Length)
+                {
+                    break;
+                }
+
+            }
+        }
+
+        private void CheckIfBoardReaderHasEnoughDigits()
+        {
+            if (this.Length * this.Length < this.boardReader.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(this.Length),
+                    "The're are not enough digits in the reader to fill the entire board!");
             }
         }
 
@@ -35,9 +73,10 @@
 
             set
             {
-                if (value > this.BoardSize)
+                if (value > BoardSize)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Any value used in the board should be less than the boardSize!");
+                    throw new ArgumentOutOfRangeException(nameof(value),
+                        "Any value used in the board should be less than the boardSize!");
                 }
 
                 this.board[row][col] = value;
@@ -46,14 +85,9 @@
 
         public bool Equals(SudokuBoard other)
         {
-            if (this.BoardSize != other.BoardSize)
+            for (var row = 0; row < BoardSize; row++)
             {
-                return false;
-            }
-
-            for (var row = 0; row < this.BoardSize; row++)
-            {
-                for (var col = 0; col < this.BoardSize; col++)
+                for (var col = 0; col < BoardSize; col++)
                 {
                     if (this[row, col] != other[row, col])
                     {
@@ -61,7 +95,6 @@
                     }
                 }
             }
-
             return true;
         }
     }
