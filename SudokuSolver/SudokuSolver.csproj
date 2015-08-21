@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cell.cs" />
     <Compile Include="Contracts\IBoard.cs" />
     <Compile Include="Contracts\IBoardReaderStrategy.cs" />
+    <Compile Include="Contracts\ISolverStrategy.cs" />
     <Compile Include="StringBoardReaderStrategy.cs" />
     <Compile Include="SudokuBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BruteForceSudokuSolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

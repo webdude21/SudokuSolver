@@ -1,6 +1,7 @@
 ﻿namespace SudokuSolver
 {
     using System;
+    using System.Text;
 
     using Contracts;
 
@@ -10,13 +11,16 @@
 
         private const byte BoardSize = 9;
 
-        public SudokuBoard(IBoardReaderStrategy boardReader)
+        private const byte BoardTileSize = 3;
+
+        public SudokuBoard()
         {
             this.InitializeBoard();
-            boardReader.FillBoard(this);
         }
 
         public byte Length => BoardSize;
+
+        public byte TileSize => BoardTileSize;
 
         private void InitializeBoard()
         {
@@ -47,6 +51,18 @@
             }
         }
 
+        public byte this[Cell cell]
+        {
+            get
+            {
+                return this[cell.Row, cell.Col];
+            }
+            set
+            {
+                this[cell.Row, cell.Col] = value;
+            }
+        }
+
         public bool Equals(SudokuBoard other)
         {
             for (var row = 0; row < BoardSize; row++)
@@ -60,6 +76,23 @@
                 }
             }
             return true;
+        }
+
+        public object Clone()
+        {
+            return this.board.Clone();
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+
+            for (var i = 0; i < BoardSize; i++)
+            {
+                stringBuilder.AppendLine(string.Join(", ", this.board[i]));
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }
