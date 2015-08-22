@@ -1,12 +1,15 @@
 ﻿namespace SudokuSolver
 {
     using System;
+    using System.Collections.Generic;
 
     using Contracts;
 
     public class BruteForceSudokuSolver : ISolverStrategy
     {
         private readonly IBoard inputBoard;
+
+        private const int CellIsEmpty = 0;
 
         public BruteForceSudokuSolver(IBoard inputBoard)
         {
@@ -68,31 +71,26 @@
         private bool[] GetUsedDigits(Cell cell)
         {
             var tileSize = this.inputBoard.TileSize;
-
-            var row = cell.Row;
-            var col = cell.Col;
-
             var usedDigits = new bool[this.inputBoard.Length];
 
-            for (var index = 0; index < this.inputBoard.Length; index++)
+            for (byte index = 0; index < this.inputBoard.Length; index++)
             {
-                if (this.inputBoard[row, index] > 0)
-                {
-                    usedDigits[this.inputBoard[row, index] - 1] = true;
-                }
-
-                if (this.inputBoard[index, col] > 0)
-                {
-                    usedDigits[this.inputBoard[index, col] - 1] = true;
-                }
-
-                if (this.inputBoard[(row / tileSize) * tileSize + index / tileSize, (col / tileSize) * tileSize + index % tileSize] > 0)
-                {
-                    usedDigits[this.inputBoard[(row / tileSize) * tileSize + index / tileSize, (col / tileSize) * tileSize + index % tileSize] - 1] = true;
-                }
+                this.GetIfDigitIsUsed(new Cell { Row = cell.Row, Col = index }, usedDigits);
+                this.GetIfDigitIsUsed(new Cell { Row = index, Col = cell.Col }, usedDigits);
+                this.GetIfDigitIsUsed(new Cell { Row = (byte)((cell.Row / tileSize) * tileSize + index / tileSize),
+                    Col = (byte)((cell.Col / tileSize) * tileSize + index % tileSize)
+                }, usedDigits);
             }
 
             return usedDigits;
+        }
+
+        private void GetIfDigitIsUsed(Cell cellToCheck, IList<bool> usedDigits)
+        {
+            if (this.inputBoard[cellToCheck] != CellIsEmpty)
+            {
+                usedDigits[this.inputBoard[cellToCheck] - 1] = true;
+            }
         }
     }
 }
