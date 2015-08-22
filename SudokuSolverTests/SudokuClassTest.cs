@@ -11,15 +11,13 @@
     {
         private const string TestString = "002008050000040070480072000008000031600080005570000600000960048090020000030800900";
 
-        private readonly StringBoardReaderStrategy boardReaderStrategy;
-
         private readonly SudokuBoard boardInstance;
 
         private readonly BruteForceSudokuSolver boardBruteForceSolver;
 
         public SudokuClassTest()
         {
-            this.boardReaderStrategy = new StringBoardReaderStrategy(TestString);
+            new StringBoardReaderStrategy(TestString);
             this.boardInstance = new SudokuBoard();
             this.boardBruteForceSolver = new BruteForceSudokuSolver(this.boardInstance);
         }
