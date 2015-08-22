@@ -2,6 +2,6 @@
 {
     public interface ISolverStrategy
     {
-        IBoard Solve();
+        IBoard Solve(IBoard input);
     }
 }

@@ -7,17 +7,14 @@
 
     public class BruteForceSudokuSolver : ISolverStrategy
     {
-        private readonly IBoard inputBoard;
-
         private const int EmptyCell = 0;
 
-        public BruteForceSudokuSolver(IBoard inputBoard)
-        {
-            this.inputBoard = inputBoard;
-        }
+        private IBoard inputBoard;
 
-        public IBoard Solve()
+        public IBoard Solve(IBoard input)
         {
+            this.inputBoard = input;
+
             if (!this.Solved(new Cell { Row = 0, Col = 0 }))
             {
                 throw new OperationCanceledException("The puzzle cannot be solved");
@@ -58,7 +55,7 @@
         {
             while (cell.Row < this.inputBoard.Length && this.inputBoard[cell.Row, cell.Col] != EmptyCell)
             {
-                if (++cell.Col > 8)
+                if (++cell.Col > this.inputBoard.Length - 1)
                 {
                     cell.Col = 0;
                     cell.Row++;
@@ -77,9 +74,13 @@
             {
                 this.GetIfDigitIsUsed(new Cell { Row = cell.Row, Col = index }, usedDigits);
                 this.GetIfDigitIsUsed(new Cell { Row = index, Col = cell.Col }, usedDigits);
-                this.GetIfDigitIsUsed(new Cell { Row = (byte)((cell.Row / tileSize) * tileSize + index / tileSize),
-                    Col = (byte)((cell.Col / tileSize) * tileSize + index % tileSize)
-                }, usedDigits);
+                this.GetIfDigitIsUsed(
+                    new Cell
+                        {
+                            Row = (byte)((cell.Row / tileSize) * tileSize + index / tileSize),
+                            Col = (byte)((cell.Col / tileSize) * tileSize + index % tileSize)
+                        },
+                    usedDigits);
             }
 
             return usedDigits;

@@ -1,6 +1,6 @@
 ﻿namespace SudokuSolver.Contracts
 {
-    public interface IBoard
+    public interface IBoard 
     {
         byte Length { get; }
 

@@ -7,11 +7,11 @@
 
     public class SudokuBoard : IBoard, IEquatable<SudokuBoard>
     {
-        private byte[][] board;
-
         private const byte BoardSize = 9;
 
         private const byte BoardTileSize = 3;
+
+        private byte[][] board;
 
         public SudokuBoard()
         {
@@ -21,16 +21,6 @@
         public byte Length => BoardSize;
 
         public byte TileSize => BoardTileSize;
-
-        private void InitializeBoard()
-        {
-            this.board = new byte[BoardSize][];
-
-            for (var i = 0; i < BoardSize; i++)
-            {
-                this.board[i] = new byte[BoardSize];
-            }
-        }
 
         public byte this[int row, int col]
         {
@@ -43,7 +33,8 @@
             {
                 if (value > BoardSize)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value),
+                    throw new ArgumentOutOfRangeException(
+                        nameof(value),
                         "Any value used in the board should be less than the boardSize!");
                 }
 
@@ -76,6 +67,32 @@
                 }
             }
             return true;
+        }
+
+        public static bool operator ==(SudokuBoard left, SudokuBoard right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SudokuBoard left, SudokuBoard right)
+        {
+            return !Equals(left, right);
+        }
+
+        private void InitializeBoard()
+        {
+            this.board = new byte[BoardSize][];
+
+            for (var i = 0; i < BoardSize; i++)
+            {
+                this.board[i] = new byte[BoardSize];
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            var sudokuBoard = obj as SudokuBoard;
+            return sudokuBoard != null && this.Equals(sudokuBoard);
         }
 
         public override string ToString()

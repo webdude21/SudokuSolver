@@ -4,6 +4,6 @@
     {
         int Length { get; }
 
-        void FillBoard (IBoard board);
+        void FillBoard(IBoard board);
     }
 }

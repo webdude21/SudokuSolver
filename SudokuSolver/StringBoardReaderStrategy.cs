@@ -6,23 +6,14 @@
 
     public class StringBoardReaderStrategy : IBoardReaderStrategy
     {
-        private readonly string input;
-
         public StringBoardReaderStrategy(string input)
         {
-            this.input = input;
+            this.Input = input;
         }
 
-        private void CheckIfBoardReaderHasEnoughDigits(IBoard board)
-        {
-            if (board.Length * board.Length < this.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(board.Length),
-                    "The're are not enough digits in the reader to fill the entire board!");
-            }
-        }
+        public string Input { get; set; }
 
-        public int Length => this.input.Length;
+        public int Length => this.Input.Length;
 
         public void FillBoard(IBoard board)
         {
@@ -30,7 +21,7 @@
             var row = 0;
             var col = 0;
 
-            foreach (var digit in this.input)
+            foreach (var digit in this.Input)
             {
                 if (col >= board.Length)
                 {
@@ -46,6 +37,15 @@
                 board[row, col] = (byte)(digit - '0');
 
                 col++;
+            }
+        }
+
+        private void CheckIfBoardReaderHasEnoughDigits(IBoard board)
+        {
+            if (board.Length * board.Length < this.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(board.Length),
+                    "The're are not enough digits in the reader to fill the entire board!");
             }
         }
     }
