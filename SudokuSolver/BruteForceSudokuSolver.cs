@@ -9,7 +9,7 @@
     {
         private readonly IBoard inputBoard;
 
-        private const int CellIsEmpty = 0;
+        private const int EmptyCell = 0;
 
         public BruteForceSudokuSolver(IBoard inputBoard)
         {
@@ -50,13 +50,13 @@
                 }
             }
 
-            this.inputBoard[cell] = 0;
+            this.inputBoard[cell] = EmptyCell;
             return false;
         }
 
         private Cell GetNextCell(Cell cell)
         {
-            while (cell.Row < this.inputBoard.Length && this.inputBoard[cell.Row, cell.Col] > 0)
+            while (cell.Row < this.inputBoard.Length && this.inputBoard[cell.Row, cell.Col] != EmptyCell)
             {
                 if (++cell.Col > 8)
                 {
@@ -87,7 +87,7 @@
 
         private void GetIfDigitIsUsed(Cell cellToCheck, IList<bool> usedDigits)
         {
-            if (this.inputBoard[cellToCheck] != CellIsEmpty)
+            if (this.inputBoard[cellToCheck] != EmptyCell)
             {
                 usedDigits[this.inputBoard[cellToCheck] - 1] = true;
             }
